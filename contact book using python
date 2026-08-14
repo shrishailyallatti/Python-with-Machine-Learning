@@ -1,0 +1,71 @@
+'''1.Add contact
+2. View contacts
+3. Search contact
+4. Delete contact
+5. Exit'''
+
+import json
+contact={}
+
+def addcontact():
+    name=input('enter the name:')
+    number=int(input('enter number:'))
+    contact[name]=number
+    print('contact added...')
+
+
+
+def viewcontact():
+    for name, number in contact.items():
+        print(f'{name}: {number}')
+
+def savecontact():
+    with open('contact.json', 'w') as fs:
+        json.dump(contact, fs, indent=10)
+
+def search():
+    print('press 1 for search by name\n 2 for search by number:')
+    s=int(input('enter your response:'))
+    if s==1:
+        re=input('enter name for search:')
+        if re in contact.keys():
+            print(f"found {re}'s contact")
+            print(f'{re}:{contact[re]}')
+        else:
+            print('there is no such contact')
+    if s==2:
+        re=int(input('enter contact for search:'))
+        if re in contact.values():
+            print(f'found {re} contact')
+            for i,j in contact.items():
+                if j==re:
+                    print(f'{i}:{j}')
+
+        else:
+            print('there is no such contact')
+                  
+def delete():
+    name=input('enter the name of the contact that u want to delete:')
+    if name in contact.keys():
+        contact.pop(name)
+        print('contact deleted.....')
+    else:
+        print('there is no such contact.....')
+
+while True:
+    print('----------------------------------------------')
+    print('1: Add contact \n2: View contacts\n3: Search contact\n4: Delete contact\n5: Exit')
+    response=int(input('enter your  response:'))
+    if response==1:
+        addcontact()
+    if response==2:
+        viewcontact()
+        savecontact()
+    if response==3:
+        search()
+    if response==4:
+        delete()
+    if response==5:
+        print('exit from the contact book')
+        break
+        
